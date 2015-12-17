@@ -42,35 +42,30 @@ namespace XmlReader.Services
             return errors;
         }
 
-
-        public List<String> GetBoardsToSearch()
+        public ErrorCounts GetTotalFxCopErrors()
         {
-            var returnStrings = new List<String>();
-            if (_xmlDoc != null)
+            var errors = new ErrorCounts();
+            errors.Projects = new List<ErrorCounts.Project>();
+
+            var targets = _xmlDoc.SelectNodes("/FxCopReport/Targets/Target");
+            foreach (XmlNode target in targets)
             {
-                var boardNode = _xmlDoc.DocumentElement.SelectSingleNode("/Application/ServiceBoardsToSearch");
-                if (boardNode != null)
+                var errorCount = 0;
+                var modules = target.SelectNodes("Modules/Module");
+                foreach (XmlNode module in modules)
                 {
-                    foreach (XmlNode node in boardNode)
+                    var namespaces = module.SelectNodes("Namespaces/Namespace");
+                    foreach (XmlNode nameSpace in namespaces)
                     {
-                        returnStrings.Add(node.InnerText);
+                        var messages = nameSpace.SelectNodes("Types/Type/Messages/Message");
+                        var x = 1;
                     }
                 }
             }
-            return returnStrings;
-        }
 
-        public string GetHfoNumber()
-        {
-            try
-            {
-                return _xmlDoc.SelectSingleNode("/Application/FactoryOutletNumber").InnerText;
-            }
-            catch (NullReferenceException er)
-            {
-                return null;
-            }
+            return errors;
         }
+        
        
     }
 }

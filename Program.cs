@@ -24,7 +24,9 @@ namespace XmlReader
             }
             Console.WriteLine("Total for StyleCop: " + errorTotal);
 
-            var xmlReader2 = new XmlReaderService("../../FxCop.xml");
+            //var xmlReader2 = new XmlReaderService("../../FxCop.xml");
+            //var totalFxCopCount = xmlReader2.GetTotalFxCopErrors();
+
 
             Console.ReadKey();
         }
